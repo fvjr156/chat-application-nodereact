@@ -10,15 +10,20 @@ app.use(bodyParser.json());
 const PORT = 5000;
 const listeningOnDBConnect = 1;
 
-const sequelize = new Sequelize(
-    'DB_NRProj',
-    'root',
-    '',
-    {
-        host: 'localhost',
-        dialect: 'mysql'
-    }
-);
+// const sequelize = new Sequelize(
+//     'DB_NRProj',
+//     'root',
+//     '',
+//     {
+//         host: 'localhost',
+//         dialect: 'mysql'
+//     }
+// );
+
+const sequelize = new Sequelize({
+    dialect: 'sqlite',
+    storage: 'sqlite/appdatabase.db'
+});
 
 const Messages = sequelize.define('Messages', {
     id: {
@@ -45,8 +50,6 @@ const Messages = sequelize.define('Messages', {
     timestamps: false
   });
   
-  Messages.sync();
-
 //test endpoint, type localhost:5000 to check if server is running
 app.get('/', function(req, res){
     res.send(["This express.js app is working", "Project Dir: E:/webapp/nr-proj1/"]);
@@ -82,7 +85,7 @@ app.post('/submitmessage', async function(req, res){
 
 async function Connect(){
     try {
-        await sequelize.authenticate();
+        await sequelize.sync();
         console.log('Connection is successfully established.');
             app.listen(PORT, function(){
                 console.log(`Server is running on port ${PORT}.`);

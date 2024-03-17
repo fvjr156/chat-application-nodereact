@@ -54,7 +54,7 @@ function App(){
         if(message.length > 0)
         {
             try{
-                const response = await axios.post('http://localhost:5000/submitmessage', toSubmitData);
+                await axios.post('http://localhost:5000/submitmessage', toSubmitData);
                 setMessagesArray([...messagesArray, {
                     datetime: dateTimeString,
                     username: username,
@@ -76,7 +76,7 @@ function App(){
         }
     }
     const username_handleEnter = function(event){
-        if(event.key == "Enter"){
+        if(event.key === "Enter"){
             event.preventDefault();
         }
     }
