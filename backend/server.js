@@ -52,7 +52,7 @@ const Messages = sequelize.define('Messages', {
   
 //test endpoint, type localhost:5000 to check if server is running
 app.get('/', function(req, res){
-    res.send(["This express.js app is working", "Project Dir: E:/webapp/nr-proj1/"]);
+    res.send(["This express.js app is working"]);
 });
 
 app.get('/getmessages', async function(req, res){
