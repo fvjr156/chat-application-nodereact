@@ -6,3 +6,4 @@ export const database = new Sequelize({
 });
 
 export default database;
+
