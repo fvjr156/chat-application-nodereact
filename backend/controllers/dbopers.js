@@ -33,21 +33,26 @@ export const submitmessage = async function (req, res) {
 };
 
 export const deleteAllMessages = async function (req, res) {
-    const includeTestMSG = false;
     try {
-        const password = req.params.key;
+        const password = req.query.key;
+        const includeTestMSG = req.query.testmsg;
         if (password === "confirm") {
-            await Messages.truncate();
-            if (includeTestMSG) {
+            const countdel = await Messages.truncate();
+            if (includeTestMSG === "true") {
                 Messages.create(
                     { datetime: '2023-01-01:00:00:00', username: 'sqlite', message: 'Hello World!' 
                 });
                 Messages.create(
                     { datetime: '2023-01-01:00:00:00', username: 'sqlite', message: 'Congratulations, the app runs properly!' }
                 );
+                const messages = await Messages.findAll();
+                const messagesJSON = JSON.stringify(messages);
+                res.status(201).json({ success: "tb_messages truncated successfully", testmsg: messagesJSON});
+            } else {
+                res.status(201).json({ success: "tb_messages truncated successfully", countdel: countdel });
             }
-            res.status(201).json({ success: "tb_messages truncated successfully" });
-        } else {
+        } 
+        else {
             res.status(403).json({ error: "Not authorized to delete messages table." });
         }
     }

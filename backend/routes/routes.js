@@ -9,7 +9,7 @@ import {
 
 router.get('/', servertest);
 router.get('/getmessages', getmessages); 
-router.get('/delete/:key', deleteAllMessages);
+router.get('/delete', deleteAllMessages);
 router.post('/submitmessage', submitmessage);
 
 export default router;
